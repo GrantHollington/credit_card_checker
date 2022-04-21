@@ -27,49 +27,58 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 const validateCred = arr => {
 
-let otherDigit = []
-let secondDigit = []
-let multipleDigit = []
-let mutatedDigit = []
-let totalArray = []
-// iterate to the left of an array for every other element
-  for (let i= arr.length - 2; i >= 0; i-=2) {
-   otherDigit.push(arr[i])
+  let otherDigit = []
+  let secondDigit = []
+  let multipleDigit = []
+  let mutatedDigit = []
+  let totalArray = []
+  // iterate to the left of an array for every other element
+    for (let i= arr.length - 2; i >= 0; i-=2) {
+    otherDigit.push(arr[i])
+    }
+  // push second element to new array
+  for (let i = arr.length - 1; i >=0; i-=2) {
+    secondDigit.push(arr[i])
   }
-// push second element to new array
-for (let i = 1; i < arr.length; i+=2) {
-  secondDigit.push(arr[i])
-}
+  // console.log(secondDigit)
 
-// multiply other digit by 2 
-for (let i = 0; i < otherDigit.length; i++){
-  multipleDigit.push(otherDigit[i] * 2)
-}
-  // if element > 9 then  minus 9 from element
-for (let i = 0; i < multipleDigit.length; i++) {
-  if (multipleDigit[i] > 9) {
-    mutatedDigit.push(multipleDigit[i] -9)
-  } 
-  else {
-    mutatedDigit.push(multipleDigit[i])
+  // multiply other digit by 2 
+  for (let i = 0; i < otherDigit.length; i++){
+    multipleDigit.push(otherDigit[i] * 2)
   }
-};
+    // if element > 9 then  minus 9 from element
+  for (let i = 0; i < multipleDigit.length; i++) {
+    if (multipleDigit[i] > 9) {
+      mutatedDigit.push(multipleDigit[i] -9)
+    } 
+    else {
+      mutatedDigit.push(multipleDigit[i])
+    }
+  };
 
 
-// add all digits back together and sum them all together
-totalArray = secondDigit.concat(mutatedDigit)
-const sum = totalArray.reduce((partialSum, a) => partialSum + a, 0);
+  // put all digits back in one array and sum them all together
+  totalArray = secondDigit.concat(mutatedDigit)
+  console.log(totalArray)
+  const sum = totalArray.reduce((partialSum, a) => partialSum + a, 0);
 
-// if sum modulo 10 is 0 then the number is valid (true)
-if (sum % 10 === 0) {
-  return true
-} else {
-  return false
+  console.log(sum)
+  // if sum modulo 10 is 0 then the number is valid (true)
+  if (sum % 10 === 0) {
+    return true
+  } else {
+    return false
+  }
+
 }
 
-}
+console.log(validateCred(mystery5));
 
-console.log(validateCred(valid1));
+
+
+
+
+
 
 
 
