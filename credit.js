@@ -27,60 +27,103 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 const validateCred = arr => {
 
-  let otherDigit = []
-  let secondDigit = []
-  let multipleDigit = []
-  let mutatedDigit = []
-  let totalArray = []
-  // iterate to the left of an array for every other element
-    for (let i= arr.length - 2; i >= 0; i-=2) {
-    otherDigit.push(arr[i])
-    }
-  // push second element to new array
-  for (let i = arr.length - 1; i >=0; i-=2) {
-    secondDigit.push(arr[i])
+let otherDigit = []
+let secondDigit = []
+let multipleDigit = []
+let mutatedDigit = []
+let totalArray = []
+// iterate to the left of an array for every other element
+  for (let i= arr.length - 2; i >= 0; i-=2) {
+   otherDigit.push(arr[i])
   }
-  // console.log(secondDigit)
+// push second element to new array
+for (let i = arr.length - 1; i >=0; i-=2) {
+  secondDigit.push(arr[i])
+}
+// console.log(secondDigit)
 
-  // multiply other digit by 2 
-  for (let i = 0; i < otherDigit.length; i++){
-    multipleDigit.push(otherDigit[i] * 2)
+// multiply other digit by 2 
+for (let i = 0; i < otherDigit.length; i++){
+  multipleDigit.push(otherDigit[i] * 2)
+}
+  // if element > 9 then  minus 9 from element
+for (let i = 0; i < multipleDigit.length; i++) {
+  if (multipleDigit[i] > 9) {
+    mutatedDigit.push(multipleDigit[i] -9)
+  } 
+  else {
+    mutatedDigit.push(multipleDigit[i])
   }
-    // if element > 9 then  minus 9 from element
-  for (let i = 0; i < multipleDigit.length; i++) {
-    if (multipleDigit[i] > 9) {
-      mutatedDigit.push(multipleDigit[i] -9)
-    } 
-    else {
-      mutatedDigit.push(multipleDigit[i])
-    }
-  };
+};
 
 
-  // put all digits back in one array and sum them all together
-  totalArray = secondDigit.concat(mutatedDigit)
-  console.log(totalArray)
-  const sum = totalArray.reduce((partialSum, a) => partialSum + a, 0);
+// add all digits back together and sum them all together
+totalArray = secondDigit.concat(mutatedDigit)
+// console.log(totalArray)
+const sum = totalArray.reduce((partialSum, a) => partialSum + a, 0);
 
-  console.log(sum)
-  // if sum modulo 10 is 0 then the number is valid (true)
-  if (sum % 10 === 0) {
-    return true
-  } else {
-    return false
-  }
+// console.log(sum)
+// if sum modulo 10 is 0 then the number is valid (true)
+if (sum % 10 === 0) {
+  return true
+} else {
+  return false
+}
 
 }
 
-console.log(validateCred(mystery5));
+// console.log(validateCred(mystery4));
+
+const findInvalidCards = arr => {
+  // check through nested array and push invalid cards to new nested array
+  // create invalid array
+  let invalid = []
+  // for every array in nested arrray, use validateCred function. if it is false, then push to invalid card array
+  for (obj of arr) {
+      let check = validateCred(obj)
+      if (check === false) {
+        invalid.push(obj)
+      }
+    }
+  return invalid
+  }
 
 
+// console.log(findInvalidCards(batch))
 
 
+const idInvalidCardCompanies = arr => {
+  // create new array for companies
+  let wrongCards = findInvalidCards(arr)
+  let companies = []
+  // iterate through nested array. use a switch statement. if company array does not already contain the company, push the company name to company array.
+  for (card of wrongCards) {
+    switch (card[0]) {
+      case 3:
+      if ( !companies.includes('Amex (American Express)')) {
+        companies.push('Amex (American Express)')
+      }
+      break;
+      case 4: 
+      if (!companies.includes('Visa')) {
+        companies.push('Visa')
+      }
+      break;
+      case 5:
+      if (!companies.includes('Mastercard')) {
+        companies.push('Mastercard')
+      }
+      break;
+      case 6:
+      if(!companies.includes('Discover')) {
+        companies.push('Discover')
+      }
+      break;
+      default:
+      console.log('Company not Found')
+    }
+  }
+  return companies
+}
 
-
-
-
-
-
-
+console.log(idInvalidCardCompanies(batch))
